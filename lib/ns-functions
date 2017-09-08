@@ -1,0 +1,15 @@
+#!/bin/bash
+
+## Auto complete - _bmk_namespaces
+_bmk_namespaces() {
+    local word="$2"
+    COMPREPLY=($(compgen -W "$(kubectl get namespaces -o custom-columns=:metadata.name)" -- "${word}"))
+    return 0
+}
+
+# Command - kns
+
+kns() {
+	kubectl config set-context $(kubectl config current-context) --namespace=$1
+}
+

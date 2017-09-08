@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Command - kcon
+kcon() {
+	(_kconbrowserstart &)
+	echo -ne "Waiting for 3secs to establish tunnel and be stable: \n( Ctrl-C ends this )\n"
+   kubectl proxy --port=8001 --address='127.0.0.1' --accept-hosts='^localhost$'
+}
+
+## Support function - _kconbrowserstart
+_kconbrowserstart() {
+	sleep 3
+       if [ -x /usr/bin/xdg-open ]; then
+        /usr/bin/xdg-open http://localhost:8001/ui
+    else
+        echo -e "\n\n Oops: can't open browser without xdg-open ¯\\_(ツ)_/¯\ncopy pasta this to your browser of choice:\n"
+        echo -e "http://localhost:8001/ui\n"
+    fi
+}

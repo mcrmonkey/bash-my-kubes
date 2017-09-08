@@ -1,0 +1,25 @@
+#!/bin/bash
+
+## Auto complete - kcp
+_bmk-kcp () {
+    local word="$2"
+    COMPREPLY=($(compgen -W "$(kubectl config get-contexts -o=name)" -- "${word}"))
+    return 0
+}
+
+# Command - kcp
+
+kcp () {
+	    if [ -z "$1" ]; then
+        kubectl config get-contexts
+    else
+        kubectl config use-context "$@"
+    fi
+}
+
+# Command - kcp-id
+
+kcp-id () {
+    kubectl config current-context
+}
+
